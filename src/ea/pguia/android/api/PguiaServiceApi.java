@@ -18,13 +18,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.util.Log;
 
-public class TomalgoServiceApi {
-	private final static String TAG = "TomalgoServiceApi";
+public class PguiaServiceApi {
+	private final static String TAG = "PguiaServiceApi";
 	private HttpClient httpclient = null;
 	private String uri = null;
-	private static TomalgoServiceApi instance = null;
+	private static PguiaServiceApi instance = null;
 
-	private TomalgoServiceApi(Context ctx) throws IOException {
+	private PguiaServiceApi(Context ctx) throws IOException {
 		super();
 
 		httpclient = new DefaultHttpClient();
@@ -34,9 +34,9 @@ public class TomalgoServiceApi {
 		uri = p.getProperty("uri");
 	}
 
-	public static TomalgoServiceApi getInstance(Context ctx) throws IOException {
+	public static PguiaServiceApi getInstance(Context ctx) throws IOException {
 		if (instance == null)
-			instance = new TomalgoServiceApi(ctx);
+			instance = new PguiaServiceApi(ctx);
 		return instance;
 	}
 
@@ -47,7 +47,7 @@ public class TomalgoServiceApi {
 		
 		HttpGet request = new HttpGet();
 		try {
-			URI reqURI = new URI(uri + "action=login&username=" + username
+			URI reqURI = new URI(uri + "action=login&name=" + username
 					+ "&password=" + sha1password);
 			request.setURI(reqURI);
 			HttpResponse response = httpclient.execute(request);

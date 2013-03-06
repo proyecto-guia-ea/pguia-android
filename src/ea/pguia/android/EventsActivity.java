@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ea.pguia.android.R;
-import ea.pguia.android.api.TomalgoServiceApi;
+import ea.pguia.android.api.PguiaServiceApi;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -34,7 +34,7 @@ public class EventsActivity extends Activity {
 			JSONObject event = null;
 			try {
 				Log.d(TAG, "ConfirmEvent");
-				String content[] = TomalgoServiceApi.getInstance(
+				String content[] = PguiaServiceApi.getInstance(
 						getApplicationContext()).ConfirmEvent(password, eventID);
 				for (int i = 0; i < content.length; i++)
 					Log.d(TAG, content[i]);

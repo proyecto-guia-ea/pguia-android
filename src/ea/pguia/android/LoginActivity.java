@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ea.pguia.android.R;
-import ea.pguia.android.api.TomalgoServiceApi;
+import ea.pguia.android.api.PguiaServiceApi;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
 			JSONObject jsonobject = null;
 			try {
 				Log.d(TAG, "LoginTask doInBackground");
-				String content[] = TomalgoServiceApi.getInstance(
+				String content[] = PguiaServiceApi.getInstance(
 						getApplicationContext()).login(params[0], params[1]);
 				for (int i = 0; i < content.length; i++)
 					Log.d(LoginTask.TAG, content[i]);

@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ea.pguia.android.R;
-import ea.pguia.android.api.TomalgoServiceApi;
+import ea.pguia.android.api.PguiaServiceApi;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -69,7 +69,7 @@ public class MainLayoutActivity extends Activity {
 			JSONObject jsonobject = null;
 			try {
 				Log.d(TAG, "FetchEventsList doInBackground, params[0]: " +params[0]);
-				String content[] = TomalgoServiceApi.getInstance(
+				String content[] = PguiaServiceApi.getInstance(
 						getApplicationContext()).listEvents(params[0]);
 				for (int i = 0; i < content.length; i++)
 					Log.d(FetchEventsList.TAG, content[i]);
