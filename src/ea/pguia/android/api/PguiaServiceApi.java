@@ -49,6 +49,7 @@ public class PguiaServiceApi {
 		try {
 			URI reqURI = new URI(uri + "action=login&name=" + username
 					+ "&password=" + sha1password);
+			Log.d(TAG, sha1password);
 			request.setURI(reqURI);
 			HttpResponse response = httpclient.execute(request);
 			Log.d(TAG, response.getStatusLine().getReasonPhrase() + " - "
