@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -40,12 +39,21 @@ public class MainLayoutActivity extends Activity {
 				String status = (String) jsonobject.get("status");
 				if (status.equals("OK")) {
 					Log.d(TAG,"Recibido OK");
-					array = jsonobject.getJSONArray("result");
+					array = jsonobject.getJSONObject("result").getJSONArray("courses");
 					String[] values = new String[array.length()];
 					for (int i = 0; i < array.length(); i++) {
-						JSONObject event = array.getJSONObject(i);
-						values[i] = event.getString("text");
-						Log.d(TAG, event.getString("enterprise"));
+						JSONObject course = array.getJSONObject(i);
+						
+						if(course.getBoolean("enabled"))
+							values[i] = course.getJSONObject("subject").getString("name") +
+									" (" + course.getJSONObject("subject").getString("credits") +
+									" credits): N/A";
+						else
+							values[i] = course.getJSONObject("subject").getString("name") +
+									" (" + course.getJSONObject("subject").getString("credits") +
+									" credits): "+ course.getString("mark");
+						
+						Log.d(TAG, values[i]);
 					}
 					setValues(values);
 					dismissDialog(ID_DIALOG_FETCHING);
@@ -70,7 +78,7 @@ public class MainLayoutActivity extends Activity {
 			try {
 				Log.d(TAG, "FetchEventsList doInBackground, params[0]: " +params[0]);
 				String content[] = PguiaServiceApi.getInstance(
-						getApplicationContext()).listEvents(params[0]);
+						getApplicationContext()).listEnrollment(params[0]);
 				for (int i = 0; i < content.length; i++)
 					Log.d(FetchEventsList.TAG, content[i]);
 
@@ -118,20 +126,20 @@ public class MainLayoutActivity extends Activity {
 
 			public void onItemClick(AdapterView<?> view, View parent,
 					int position, long id) {
-				Intent intent = new Intent(getApplicationContext(),
-						EventsActivity.class);
-				try {
-					Log.d(TAG, array.getJSONObject(position).toString());
-					JSONObject events = array.getJSONObject(position);
-					intent.putExtra("promo", events.getString("promo"));
-					intent.putExtra("eventID", events.getString("id"));
-					intent.putExtra("username", username);
-					intent.putExtra("password", password);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				startActivity(intent);
+//				Intent intent = new Intent(getApplicationContext(),
+//						EventsActivity.class);
+//				try {
+//					Log.d(TAG, array.getJSONObject(position).toString());
+//					JSONObject events = array.getJSONObject(position);
+//					intent.putExtra("promo", events.getString("promo"));
+//					intent.putExtra("eventID", events.getString("id"));
+//					intent.putExtra("username", username);
+//					intent.putExtra("password", password);
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				startActivity(intent);
 			}
 		});
 	}

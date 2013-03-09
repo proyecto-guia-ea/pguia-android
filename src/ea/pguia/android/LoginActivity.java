@@ -97,8 +97,6 @@ public class LoginActivity extends Activity {
 					Log.d(TAG, "succeed: " +succeed);
 
 					if (succeed.equals("true")){
-						String enterprise = (String) result.get("enterprise").toString();
-						Log.d(TAG, ("enterprise: " +enterprise));
 						Intent intent = new Intent(activity, MainLayoutActivity.class);
 						Log.d(TAG, intent.toString());
 						intent.putExtra("username", username);

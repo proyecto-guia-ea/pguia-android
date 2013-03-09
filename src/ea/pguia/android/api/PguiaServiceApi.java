@@ -70,12 +70,12 @@ public class PguiaServiceApi {
 		return null;
 	}
 	
-	public String[] listEvents(String password) throws ClientProtocolException, IOException{
+	public String[] listEnrollment(String password) throws ClientProtocolException, IOException{
 		Log.d(TAG, "listEvents");
 		String sha1password = SHA1.getInstance().digestToString(password);
 		HttpGet request = new HttpGet();
 		try {
-			URI reqURI = new URI(uri + "action=queryevents&password=" + sha1password);
+			URI reqURI = new URI(uri + "action=queryenrollement&password=" + sha1password);
 			request.setURI(reqURI);
 			HttpResponse response = httpclient.execute(request);
 			Log.d(TAG, response.getStatusLine().getReasonPhrase() + " - "
