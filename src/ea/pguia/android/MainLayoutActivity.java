@@ -55,6 +55,7 @@ public class MainLayoutActivity extends Activity {
 						
 						Log.d(TAG, values[i]);
 					}
+					
 					dismissDialog(ID_DIALOG_FETCHING);
 					showList(values);
 				}
@@ -114,17 +115,17 @@ public class MainLayoutActivity extends Activity {
 	}
 
 	private void showList(String[] values) {
-		ListView listView = (ListView) findViewById(R.id.eventslist);
+		GridView gridview = (GridView) findViewById(R.id.gridview);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
 		// Assign adapter to ListView
-		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> view, View parent,
-					int position, long id) {
+		gridview.setAdapter(adapter);
+//		gridview.setOnItemClickListener(new OnItemClickListener() {
+//
+//			public void onItemClick(AdapterView<?> view, View parent,
+//					int position, long id) {
 //				Intent intent = new Intent(getApplicationContext(),
 //						EventsActivity.class);
 //				try {
@@ -139,8 +140,8 @@ public class MainLayoutActivity extends Activity {
 //					e.printStackTrace();
 //				}
 //				startActivity(intent);
-			}
-		});
+//			}
+//		});
 	}
 
 	@Override

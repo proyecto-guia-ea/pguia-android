@@ -22,7 +22,7 @@ public final class R {
         public static final int etRegisterPassword=0x7f07000c;
         public static final int etRegisterUsername=0x7f07000a;
         public static final int etUsername=0x7f070004;
-        public static final int eventslist=0x7f070008;
+        public static final int gridview=0x7f070008;
         public static final int header=0x7f070001;
         public static final int lLinkLogin=0x7f070010;
         public static final int lLogo=0x7f070002;
