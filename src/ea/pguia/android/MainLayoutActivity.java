@@ -20,18 +20,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 
 public class MainLayoutActivity extends Activity {
 	private final static String TAG = "MainLayoutActivity";
 	private final static int ID_DIALOG_FETCHING = 0;
 
-	private String[] values;
 	private JSONArray array;
 	public String username;
 	public String password;
 
-	private class FetchEventsList extends AsyncTask<String, Void, JSONObject> {
+	private class GetCourseList extends AsyncTask<String, Void, JSONObject> {
 		@Override
 		protected void onPostExecute(JSONObject jsonobject) {
 
@@ -55,9 +55,8 @@ public class MainLayoutActivity extends Activity {
 						
 						Log.d(TAG, values[i]);
 					}
-					setValues(values);
 					dismissDialog(ID_DIALOG_FETCHING);
-					showList();
+					showList(values);
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -65,9 +64,9 @@ public class MainLayoutActivity extends Activity {
 			}
 		}
 
-		private final static String TAG = "FetchEventsList";
+		private final static String TAG = "GetCourseList";
 
-		FetchEventsList() {
+		GetCourseList() {
 			super();
 
 		}
@@ -76,11 +75,11 @@ public class MainLayoutActivity extends Activity {
 		protected JSONObject doInBackground(String... params) {
 			JSONObject jsonobject = null;
 			try {
-				Log.d(TAG, "FetchEventsList doInBackground, params[0]: " +params[0]);
+				Log.d(TAG, "GetCourseList doInBackground, params[0]: " +params[0]);
 				String content[] = PguiaServiceApi.getInstance(
 						getApplicationContext()).listEnrollment(params[0]);
 				for (int i = 0; i < content.length; i++)
-					Log.d(FetchEventsList.TAG, content[i]);
+					Log.d(GetCourseList.TAG, content[i]);
 
 				String json = content[content.length - 1];
 				jsonobject = new JSONObject(json);
@@ -110,11 +109,11 @@ public class MainLayoutActivity extends Activity {
 		Log.d(TAG, username+" / "+password);
 
 		showDialog(ID_DIALOG_FETCHING);
-		(new FetchEventsList()).execute(bundle.getString("password"));
+		(new GetCourseList()).execute(bundle.getString("password"));
 
 	}
 
-	private void showList() {
+	private void showList(String[] values) {
 		ListView listView = (ListView) findViewById(R.id.eventslist);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -163,13 +162,11 @@ public class MainLayoutActivity extends Activity {
 			loadingDialog.setMessage("Fetching events...");
 			loadingDialog.setIndeterminate(true);
 			loadingDialog.setCancelable(false);
+			Log.d(TAG, "Loading Data");
 			return loadingDialog;
 
 		}
 		return super.onCreateDialog(id);
 	}
 
-	private void setValues(String[] values) {
-		this.values = values;
-	}
 }
