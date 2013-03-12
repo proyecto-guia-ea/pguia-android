@@ -22,7 +22,7 @@ public final class R {
         public static final int etRegisterPassword=0x7f07000c;
         public static final int etRegisterUsername=0x7f07000a;
         public static final int etUsername=0x7f070004;
-        public static final int gridview=0x7f070008;
+        public static final int eventslist=0x7f070008;
         public static final int header=0x7f070001;
         public static final int lLinkLogin=0x7f070010;
         public static final int lLogo=0x7f070002;
@@ -31,13 +31,15 @@ public final class R {
         public static final int lRegisterPassword=0x7f07000b;
         public static final int lRegisterUsername=0x7f070009;
         public static final int lUsername=0x7f070003;
-        public static final int menu_settings=0x7f070011;
+        public static final int menu_settings=0x7f070012;
+        public static final int select=0x7f070011;
     }
     public static final class layout {
         public static final int events_layout=0x7f030000;
         public static final int login_layout=0x7f030001;
         public static final int main_layout=0x7f030002;
         public static final int register_layout=0x7f030003;
+        public static final int select_layout=0x7f030004;
     }
     public static final class menu {
         public static final int main_layout=0x7f060000;
@@ -51,6 +53,7 @@ public final class R {
         public static final int title_activity_main_layout=0x7f040006;
         public static final int title_activity_register=0x7f040002;
         public static final int title_activity_score=0x7f040007;
+        public static final int title_activity_select=0x7f040008;
     }
     public static final class style {
         public static final int AppTheme=0x7f050000;

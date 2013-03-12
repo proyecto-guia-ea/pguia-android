@@ -1,6 +1,7 @@
 package ea.pguia.android;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -30,8 +32,26 @@ public class MainLayoutActivity extends Activity {
 	private JSONArray array;
 	public String username;
 	public String password;
+	public String position;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.d(TAG, "Iniciada MainLayoutActivity");
+		setContentView(R.layout.main_layout);
+		Bundle bundle = this.getIntent().getExtras();
+		username = bundle.get("username").toString();
+		password = bundle.get("password").toString();
+		position = bundle.get("option").toString();
 
-	private class GetCourseList extends AsyncTask<String, Void, JSONObject> {
+		Log.d(TAG, username+" / "+password+" / "+position);
+
+		showDialog(ID_DIALOG_FETCHING);
+		(new GetCourseList()).execute(bundle.getString("password"));
+
+	}
+
+	private class GetCourseList extends AsyncTask <String, Void, JSONObject> {
 		@Override
 		protected void onPostExecute(JSONObject jsonobject) {
 
@@ -40,24 +60,40 @@ public class MainLayoutActivity extends Activity {
 				if (status.equals("OK")) {
 					Log.d(TAG,"Recibido OK");
 					array = jsonobject.getJSONObject("result").getJSONArray("courses");
-					String[] values = new String[array.length()];
-					for (int i = 0; i < array.length(); i++) {
-						JSONObject course = array.getJSONObject(i);
-						
-						if(course.getBoolean("enabled"))
-							values[i] = course.getJSONObject("subject").getString("name") +
-									" (" + course.getJSONObject("subject").getString("credits") +
-									" credits): N/A";
-						else
-							values[i] = course.getJSONObject("subject").getString("name") +
-									" (" + course.getJSONObject("subject").getString("credits") +
-									" credits): "+ course.getString("mark");
-						
-						Log.d(TAG, values[i]);
-					}
+					//String[] values = new String[array.length()];
+					Vector<String> values = new Vector<String>();
 					
-					dismissDialog(ID_DIALOG_FETCHING);
-					showList(values);
+					Log.d(TAG, "Entrando en Switch, con position= "+position);
+					switch (Integer.parseInt(position)) {
+						case 0:
+							for (int i = 0; i < array.length(); i++) {
+								JSONObject course = array.getJSONObject(i);
+								
+								if(!course.getBoolean("enabled")) {
+									values.add(course.getJSONObject("subject").getString("name") +
+									" (" + course.getJSONObject("subject").getString("credits") +
+									" credits): "+ course.getString("mark"));
+									Log.d(TAG, values.lastElement());
+								}
+							}
+							break;
+	
+						case 1:
+							for (int i = 0; i < array.length(); i++) {
+								JSONObject course = array.getJSONObject(i);
+								
+								if(course.getBoolean("enabled")) {
+									values.add(course.getJSONObject("subject").getString("name") +
+									" (" + course.getJSONObject("subject").getString("credits") +
+									" credits): N/A");
+									Log.d(TAG, values.lastElement());
+								}
+							}
+							break;
+					}
+						Log.d(TAG,"FUREA DEL SWITCH");
+						dismissDialog(ID_DIALOG_FETCHING);
+						showList(values.toArray(new String[values.size()]));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -100,34 +136,21 @@ public class MainLayoutActivity extends Activity {
 
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_layout);
-		Bundle bundle = this.getIntent().getExtras();
-		username = bundle.get("username").toString();
-		password = bundle.get("password").toString();
-		Log.d(TAG, username+" / "+password);
-
-		showDialog(ID_DIALOG_FETCHING);
-		(new GetCourseList()).execute(bundle.getString("password"));
-
-	}
-
 	private void showList(String[] values) {
-		GridView gridview = (GridView) findViewById(R.id.gridview);
+		Log.d(TAG,"ENTRANDO EN SHOWLIST");
+		ListView listview = (ListView) findViewById(R.id.eventslist);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
 		// Assign adapter to ListView
-		gridview.setAdapter(adapter);
-//		gridview.setOnItemClickListener(new OnItemClickListener() {
+		listview.setAdapter(adapter);
+//		listview.setOnItemClickListener(new OnItemClickListener() {
 //
 //			public void onItemClick(AdapterView<?> view, View parent,
 //					int position, long id) {
 //				Intent intent = new Intent(getApplicationContext(),
-//						EventsActivity.class);
+//						ShowDetailActivity.class);
 //				try {
 //					Log.d(TAG, array.getJSONObject(position).toString());
 //					JSONObject events = array.getJSONObject(position);

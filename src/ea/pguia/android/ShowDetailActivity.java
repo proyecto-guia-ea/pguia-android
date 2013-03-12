@@ -13,8 +13,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
 
-public class EventsActivity extends Activity {
-	private final static String TAG = "EventsActivity";
+public class ShowDetailActivity extends Activity {
+	private final static String TAG = "ShowDetailActivity";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

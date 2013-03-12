@@ -31,7 +31,11 @@
             android:label="@string/title_activity_main_layout" >
         </activity>
         <activity
-            android:name="ea.pguia.android.EventsActivity"
+            android:name=".SelectActivity"
+            android:label="@string/title_activity_select" >
+        </activity>
+        <activity
+            android:name=".ShowDetailActivity"
             android:label="@string/title_activity_score" >
         </activity>
     </application>

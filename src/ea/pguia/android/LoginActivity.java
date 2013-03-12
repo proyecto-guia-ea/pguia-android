@@ -27,6 +27,12 @@ public class LoginActivity extends Activity {
 	public String username;
 	public String password;
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login_layout);
+	}
+	
 	private class LoginTask extends AsyncTask<String, Void, JSONObject> {
 		private final static String TAG = "LoginTask";
 		private Activity activity = null;
@@ -97,13 +103,13 @@ public class LoginActivity extends Activity {
 					Log.d(TAG, "succeed: " +succeed);
 
 					if (succeed.equals("true")){
-						Intent intent = new Intent(activity, MainLayoutActivity.class);
+						Log.d(TAG, "Justo antes de iniciar Select");
+						Intent intent = new Intent(activity, SelectActivity.class);
 						Log.d(TAG, intent.toString());
 						intent.putExtra("username", username);
 						intent.putExtra("password", password);
-						Log.d(TAG, "Antes");
 						startActivity(intent);
-						Log.d(TAG, "Despues");
+						Log.d(TAG, "Iniciada SelectActivity");
 
 					}else {
 						String message = (String) result.get("message").toString();
@@ -129,12 +135,6 @@ public class LoginActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_layout);
 	}
 
 	public void showRegisterActivity(View v) {

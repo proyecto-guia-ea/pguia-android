@@ -63,6 +63,7 @@ public class PguiaServiceApi {
 			while ((line = reader.readLine()) != null)
 				lines.add(line);
 			return lines.toArray(new String[lines.size()]);
+			
 		} catch (URISyntaxException e) {
 			Log.e(TAG, "Please verify uri value in assets/api.properties");
 			e.printStackTrace();
